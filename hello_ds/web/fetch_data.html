@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetching Remote Data</title>
+</head>
+<body>
+    <article>
+        <header></header>
+        <section>
+            <!-- this is where our data will appear -->
+            <textarea id='monitor'></textarea>
+            <hr/>
+            <button id='btnGo'>Get Data</button>
+        </section>
+        <footer></footer>
+    </article>
+    <script>
+        // usually JavaScript would be in a SEPARATE file
+        my_data = '' // here's a place we can store data
+        // fetch the external data
+        // ()=>{} is a function
+        const getData = ()=>{ //()=>{} is a function
+            // this replaces XMLHttpRequest
+            fetch('http://jsonplaceholder.typicode.com/users/6') // replace with IP adress 
+                .then(response => response) // convert the data from JSON
+                .then(
+                    // when the data comes back, put in into the page
+                    (d) => {
+                        data = d
+                        console.log(data)
+                        monitor.innerHTML = data.name
+                    }
+                    ) // store the data in our 'data' variable
+        }
+        // make the button respond to clicks
+        btnGo.addEventListener('click', getData)
+    </script>
+</body>
+</html>
+<!--  -->
