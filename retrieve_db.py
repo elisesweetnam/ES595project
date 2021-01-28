@@ -1,6 +1,4 @@
 import sqlite3
-from datetime import datetime
-date_value = str(datetime.now())#gives python from the date and time at that time 
 
 db_conn = sqlite3.connect('movement_db')
 db_curr = db_conn.cursor()
@@ -12,8 +10,10 @@ SELECT * FROM movement_table
 '''
 print (statement)
 
+# execute the statement (by using the cursor)
 db_curr.execute(statement)
 
+# now we have a cursor loaded with the retrieved data from the database
 for row in db_curr.fetchall():
     print(row)
 

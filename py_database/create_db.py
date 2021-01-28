@@ -6,7 +6,7 @@ db_conn = sqlite3.connect('movement_db') #_db tells us its a database
 #curser
 db_curr = db_conn.cursor() #curser navigates in database. points to where you are in a database 
 
-#statement, tripple quotes lets 
+#statement, tripple quotes lets you add new lines within a quote
 statement = '''
 CREATE TABLE movement_table(
     id int primary key, 
