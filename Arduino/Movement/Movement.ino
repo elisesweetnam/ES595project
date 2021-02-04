@@ -15,5 +15,5 @@ ThisReading = Sensor;
 Movement= ThisReading - LastReading;
 Serial.print("Movement:");
 Serial.println(Movement);
-delay(100);
+delay(10000);
 }

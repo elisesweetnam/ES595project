@@ -28,8 +28,6 @@ def add_db(time,FSR,dt):
     db_curr.close()
     db_conn.close()
 
-add_db(1,1,1)
-
 def read_data():
     arduinodata=serial.Serial('COM5', 115200, timeout=0.1)
     while arduinodata.inWaiting:
