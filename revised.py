@@ -3,7 +3,7 @@ import requests # see intro python book p222
 import time
 
 # # Make ONE request
-# url = 'http://numbersapi.com/70/trivia' # '192.168.0.38/movement'
+# url = '192.168.0.38/movement' # '192.168.0.38/movement'
 # resp = requests.get(url)
 # print(resp) #<Response [200]>
 # print(resp.text)
@@ -23,6 +23,6 @@ starttime = time.time()
 print('To stop this program, KILL THIS TERMINAL')
 while True:
     time.sleep(1.0 - ((time.time() - starttime) % 1.0)) # locks to system clock, sleeps every 1.0 seconds
-    url = 'http://192.168.0.40/movement' # '192.168.0.38/movement'
+    url = 'http://192.168.0.40/movement' # '192.168.0.40/movement'
     resp = requests.get(url)
     print(resp.text)
