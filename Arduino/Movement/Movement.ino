@@ -3,6 +3,7 @@ int Sensor;
 int ThisReading;
 int LastReading;
 int Movement;
+int Movementsq;
 
 void setup() {
 Serial.begin(9600);
@@ -13,7 +14,7 @@ Sensor = analogRead(FSRpin);
 LastReading = ThisReading;
 ThisReading = Sensor;
 Movement= ThisReading - LastReading;
-Serial.print("Movement:");
-Serial.println(Movement);
-delay(10000);
+Movementsq= sqrt(sq(Movement));
+Serial.println(Movementsq);
+delay(500);
 }

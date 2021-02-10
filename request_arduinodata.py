@@ -26,3 +26,15 @@ while True:
     url = 'http://192.168.0.40/movement' # '192.168.0.40/movement'
     resp = requests.get(url)
     print(resp.text)
+
+#Put data in a database 
+
+#Change resp to to movement 
+    # ThisReading = resp
+    # Movement= ThisReading - LastReading
+    # Movementsq= sqrt(sq(Movement))
+    # Serial.println(Movementsq)
+
+#Make Movementsq into a graph
+#Calculate corr/cov 
+#If there is a sig diff send email alert es595email.py
