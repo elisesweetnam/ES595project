@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        Start:<br/>
+        <input id='min_date' type="date" /><br/>
+
+        End:<br/>
+        <input id='max_date' type="date" /><br/>
+        <button id='btnGo'>Go</button>
+
+        <!-- <p>Or pick last day, last hour last ...</p> -->
+    </form>
+</body>
+<script>
+// respond to the button click
+const handleClick = ()=>{
+    // back-tick syntax in JavaScript lets us interpolate values using ${}
+    alert(`You clicked with min ${min_date.value} max ${max_date.value}`)
+}
+
+btnGo.addEventListener('click', handleClick)
+
+
+
+</script>
+</html>

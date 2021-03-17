@@ -27,12 +27,14 @@ while True:
     db_conn=sqlite3.connect('movement.db')
         db_curr=db_conn.cursor()
 
-        db_curr.execute('''
-        CREATE TABLE movement_table
-        (Time TEXT, 
-        reading int, 
-        reading_dt datetime)
-        ''')
+# This is only needed one time to create the 
+
+        # db_curr.execute('''
+        # CREATE TABLE movement_table
+        # (Time TEXT, 
+        # reading int, 
+        # reading_dt datetime)
+        # ''')
 
         db_curr.execute(
             '''INSERT INTO movement_table
@@ -115,7 +117,4 @@ while True:
                 server.sendmail(
                     sender_email, receiver_email, message.as_string()
                 )
-
-
-
-
+                
