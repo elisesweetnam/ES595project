@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.highcharts.com/8.0/highcharts.js"></script>
+    <title>Movement data graph</title>
+    <!-- design of the webpage -->
+
+    <style>
+        body {
+        min-width: 300px;
+        max-width: 800px;
+        height: 400px;
+        margin: 0 auto;
+        }
+        h2 {
+        font-family: Arial;
+        font-size: 2.5rem;
+        text-align: center;
+        }
+    </style>
+</head>
+    <body>
+        <article>
+            <header></header>
+            <section>
+                <!-- this is where our data will appear -->
+                <textarea id='monitor'></textarea>
+                <hr/>
+                <button id='btnGo'>Get Data</button>
+            </section>
+            <footer></footer>
+        </article>
+        <script>
+            var chartT = new Highcharts.Chart({
+                chart:{ 
+                    renderTo : 'movement-chart' 
+                },
+                title: { 
+                    text: 'Change in FSR data' 
+                },
+                series: [{
+                    showInLegend: false,
+                    data: []
+                }],
+                plotOptions: {
+                    line: { 
+                        animation: false,
+                        dataLabels: { 
+                            enabled: true 
+                        }
+                    },
+                    series: { color: '#059e8a' }
+                },
+                xAxis: { 
+                    type: 'datetime',
+                    dateTimeLabelFormats: { 
+                        second: '%H:%M:%S' 
+                    }
+                },
+                yAxis: {
+                    title: { 
+                        text: 'Movement (analog units)' 
+                    }
+                },
+                credits: { 
+                    enabled: false 
+                }
+            });
+
+
+            // usually JavaScript would be in a SEPARATE file
+            my_data = '' // here's a place we can store data
+            // fetch the external data
+            // ()=>{} is a function
+            const getData = ()=>{ 
+                // this replaces XMLHttpRequest
+                // fetch('http://jsonplaceholder.typicode.com/users/6') // replace with IPadress/movement
+                fetch('http://192.168.0.40/movement')
+                    .then(response => response) // convert the data from JSON
+                    .then(
+                        // when the data comes back, put in into the page
+                        (d) => {
+                            data = d
+                            console.log(data)
+                            monitor.innerHTML = data.name
+                        }
+                        ) // store the data in our 'data' variable
+            }
+            // make the button respond to clicks
+            btnGo.addEventListener('click', getData)
+
+
+    // graph will be made in request_arduinodata.py 
+    // call on the graph and display it every second/minute 
+        </script>
+    </body>
+</html>
+<!--  -->
