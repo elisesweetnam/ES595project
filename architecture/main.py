@@ -11,8 +11,8 @@ def main():
     This module handles all the other modules 
     '''
     data_util.handleData()
-    db_util.handleDatabase()
-    email_util.handleEmail()
+    # db_util.handleDatabase()
+    # email_util.handleEmail()
 
 if __name__ == "__main__":
     main()
