@@ -12,6 +12,7 @@ from retrieve_db import retrieve_dt
 app = Flask(__name__)
 
 # a route where we will display a welcome message via an HTML template
+# @ allows me to run html
 @app.route("/")
 def hello():
     message = "Seizure monitor"

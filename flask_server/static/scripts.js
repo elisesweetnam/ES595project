@@ -31,25 +31,21 @@ const makeChart = (chart_data)=>{
             name:'Sensor 2',
             showInLegend: true,
             data: JSON.parse(chart_data[1])
-
         },
         {
             name:'Sensor 3',
             showInLegend: true,
             data: JSON.parse(chart_data[2])
-
         },
         {
             name:'Sensor 4',
             showInLegend: true,
             data: JSON.parse(chart_data[3])
-
         },
         {
             name:'Sensor 5',
             showInLegend: true,
             data: JSON.parse(chart_data[4])
-
         }
         ],
         plotOptions: {
@@ -72,11 +68,9 @@ const makeChart = (chart_data)=>{
                 }
         },
         yAxis: {
-            
         },
         credits: { enabled: false }
     });
-
 }
 
 // a function to retrieve data from the db via Python
