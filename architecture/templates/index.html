@@ -1,0 +1,66 @@
+<!-- templates/index.html -->
+<html>
+
+<head>
+  <title>Flask Home Page with Message</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <!-- import Bootsrap for some pretty styles -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"></script> -->
+  <!-- we will need the Luxon library to calculate dates and times -->
+  <script src='/static/luxon.js'></script>
+  <!-- we will need the highcharts library to plot charts -->
+  <script src="https://code.highcharts.com/8.0/highcharts.js"></script>
+</head>
+
+<body>
+  <!-- Bootstrap 'container' makes everything nicely centred on the page -->
+  <div class="container">
+    <!-- good practice to use 'semantic' tags like nav, article and section instead of 'div' -->
+    <nav>
+      <a href='/'>Home</a> |
+      <a href='/live'>Live</a>
+    </nav>
+    <h1>{{message}}</h1>
+    <section>
+      <input id='userEmail' type="email" placeholder="Enter email here">
+      <button id='btnEmailGo'>Go</button>
+    </section>
+    <section>
+      <h3>Choose a Historical Snapshot to View</h3>
+      Start Date and Time:<br />
+      <input id='min_date' type="date" />
+      <input id='min_time' type='time' /><br />
+      End Date and Time:<br />
+      <input id='max_date' type="date" />
+      <input id='max_time' type='time' /><br />
+      <button id='btnGetData'>Go</button>
+
+      <p>Or pick a default time period:
+        <button id='btnLastDay'>Last Data (17th March)</button>
+        <button id='btnLastHour'>Last Hour</button>
+        <button id='btnLast5Mins'>Last 5 minutes</button>
+        <button id='btnLastAlert'>(Last Alert)</button>
+      </p>
+      <p>Or choose how many minutes to show (1-20)
+        <input type='range' min="1" max="20" value='1' id='recentMinutes' />
+        <label for="recentMinutes" id='recentMinutesLabel'>
+          1
+        </label> minute(s)
+      </p>
+    </section>
+    <hr/>
+    <!-- we need somewhere for the chart to go -->
+    <section id='historical-chart'></section>
+  </div>
+</body>
+
+<script src="/static/scripts.js"></script>
+<script>
+  
+
+</script>
+</html>
