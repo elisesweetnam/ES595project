@@ -1,8 +1,7 @@
-<!-- templates/index.html -->
 <html>
 
 <head>
-  <title>ESP Project</title>
+  <title>ESP Project - Alert</title>
   <link rel="stylesheet" href="/static/style.css">
   <!-- import Bootsrap for some pretty styles -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -27,40 +26,17 @@
       <a href='/samples'>Samples</a> |
       <a href='/alert?start_dt=0&end_dt=1&area_under=0'>Alert</a>
     </nav>
-    <h1>{{message}}</h1>
+    <pre>{{data}}</pre>
+    <h4>Area Under: {{area_under}}</h4>
     <section>
-      <input id='userEmail' type="email" placeholder="enter email for alerts here"/>
-      <button id='btnEmail'>Go</button>
-    </section>
-    <section>
-      <h3>Choose a Historical Snapshot to View</h3>
-      Start Date and Time:<br />
-      <input id='min_date' type="date" />
-      <input id='min_time' type='time' /><br />
-      End Date and Time:<br />
-      <input id='max_date' type="date" />
-      <input id='max_time' type='time' /><br />
-      <button id='btnGetData'>Go</button>
-
-      <p>Or pick a default time period:
-        <!-- <button id='btnLastDay'>Last Data (17th March)</button> -->
-        <button id='btnLastHour'>Last Hour</button>
-        <button id='btnLast5Mins'>Last 5 minutes</button>
-        <button id='btnLastAlert'>(Last Alert)</button>
-      </p>
-      <p>Or choose how many minutes to show (1-20)
-        <input type='range' min="1" max="20" value='1' id='recentMinutes' />
-        <label for="recentMinutes" id='recentMinutesLabel'>
-          1
-        </label> minute(s)
-      </p>
+      <h3>Alert</h3>
+      Start Date and Time: {{start_dt}} <br/>
+      End Date and Time: {{end_dt}}
     </section>
     <hr/>
-    <!-- we need somewhere for the chart to go -->
-    <section id='historical-chart'></section>
+    <section id='alert-chart'></section>
   </div>
 </body>
 
-<script src="/static/scripts.js"></script>
-
+<script src="/static/alert.js"></script>
 </html>

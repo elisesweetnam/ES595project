@@ -2,13 +2,22 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-def handleEmail(msg):
+def handleEmail(msg, start_dt=0, end_dt=1, area_under=0): # sensible defaults
     '''
     This module handles sending emails
     '''  
+    # read in the current email address to be used from a simple text file, or use a default address
+    try:
+        with open('emailAddress.txt','rt') as fin:
+            currentEmail = fin.readline()
+    except: # if we fail to read the text file, just set a default
+        currentEmail = 'es595recipient@gmail.com'
+    # print(currentEmail)
+
   # sending an email with hyperlink
     sender_email = "es595project@gmail.com"
-    receiver_email = "es595recipient@gmail.com"
+    receiver_email = currentEmail # "es595recipient@gmail.com"
+    print('sending an email to {}'.format(receiver_email))
     password = "Projectpassword2021!"
 
     message = MIMEMultipart("alternative")
@@ -17,8 +26,6 @@ def handleEmail(msg):
     message["To"] = receiver_email
 
     # Create the plain-text and HTML version of your message
-    # http://127.0.0.1:5000/
-    # http://127.0.0.1:5000/live  
     text = """\
     Hi,
     The patient has triggered an alert:
@@ -28,13 +35,15 @@ def handleEmail(msg):
     <body>
         <p>Hi,<br>
         <!-- URL may need to change -->
-        <a href="http://127.0.0.1:5000/">The patient</a> 
+        <a href="http://127.0.0.1:5000/alert?start_dt={}&end_dt={}&area_under={}">The patient</a> 
         has triggered an alert.
-        {}
         </p>
+        <section>
+        {}
+        </section>
     </body>
     </html>
-    """.format(msg)
+    """.format(start_dt, end_dt, area_under, msg)
 
     # Turn these into plain/html MIMEText objects
     part1 = MIMEText(text, "plain")
@@ -54,4 +63,4 @@ def handleEmail(msg):
     
 
 if __name__ == "__main__":
-    handleEmail()
+    handleEmail('dummy message just to exercise the code')

@@ -13,7 +13,7 @@ let alert_end_dt
 
 // function to plot chart using historical data
 const makeChart = (chart_data)=>{
-    console.log(Date(JSON.parse(chart_data[0])[0][0]))
+    // console.log(Date(JSON.parse(chart_data[0])[0][0]))
     // we do need to decide if the chart neds a 'max size'
     let chartT = new Highcharts.Chart({
         // turboThreshold:9999, // https://api.highcharts.com/highcharts/plotOptions.series.turboThreshold
@@ -156,28 +156,48 @@ const handleRecentMinutes=()=>{
     let numMinutes= recentMinutes.value
     recentMinutesLabel.innerHTML = numMinutes
     // we then use this to get some data....
+    // useful values to work with (known-good data from 17 March 2021)
+    let now = DateTime.now()
+    let agoMinutes = now.minus({ minutes: numMinutes });
+    start_dt=agoMinutes
+    end_dt=now
+    // pass these to our generic fetcher
+    fetchDTResults(start_dt, end_dt)
 }
 
-const handleEmailAddress=()=>{
-    console.log(userEmail.value)
-    localStorage.setItem("currentEmail", userEmail.value)
+
+const handleEmailChange=()=>{
+    newEmail = userEmail.value
+    localStorage.setItem('userEmail', newEmail)
+    // we also want to persist this email value on the server
+    urlStr = `http://127.0.0.1:5000/set_email?userEmail=${newEmail}`
+    // console.log(urlStr) // the dt values are UTC (not SQL)
+    fetch(urlStr)
+        .then(
+            response => response.text() // or response.json?
+        ).then(
+            (data_j) => {
+                // now we need to un-pack the returned JSON into data we can use in the browser
+                historic_values = JSON.parse(data_j) // convert the json to data structures
+                // console.log(historic_values) 
+                // use these values in a chart
+                makeChart(historic_values)
+            }
+        )
+
 }
 
 // listen out for 'click' events
 btnGetData.addEventListener('click', handleUserDT)
-btnLastDay.addEventListener('click', handleDay)
 btnLastHour.addEventListener('click', handleHour)
 btnLast5Mins.addEventListener('click', handle5Mins)
 btnLastAlert.addEventListener('click', handleLastAlert)
-btnEmailGo.addEventListener('click', handleEmailAddress)
+btnEmail.addEventListener('click', handleEmailChange)
 // listen out for a 'change' event
 recentMinutes.addEventListener('change', handleRecentMinutes) //for the slider 
 
 // init method (gets called later)
 const init=()=>{
-    if(localStorage.getItem("currentEmail")){
-        userEmail.value=localStorage.getItem("currentEmail")
-    }
     // set date and time field values to sensible defaults by using the Luxon library
     let currentDate = new Date()
     currentDate.setSeconds(0, 0) // remove any seconds and milliseconds
@@ -189,6 +209,10 @@ const init=()=>{
     tenMinutesAgo = new Date(DateTime.now().minus({minutes:10}).ts)
     tenMinutesAgo.setSeconds(0,0)
     min_time.valueAsDate = tenMinutesAgo // default to 10 minutes ago
+    // if there is a stored email, read it back
+    if(localStorage.getItem('userEmail')){
+        userEmail.value = localStorage.getItem(userEmail)
+    }
 }
 
 // do some initilization when the page first loads

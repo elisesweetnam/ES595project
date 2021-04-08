@@ -1,0 +1,50 @@
+<!-- templates/index.html -->
+<html>
+
+<head>
+    <title>ESP Project - Sample Datasets</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- import Bootsrap for some pretty styles -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"></script> -->
+    <!-- we will need the Luxon library to calculate dates and times -->
+    <script src='/static/luxon.js'></script>
+    <!-- we will need the highcharts library to plot charts -->
+    <script src="https://code.highcharts.com/8.0/highcharts.js"></script>
+    
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+
+<body>
+    <!-- Bootstrap 'container' makes everything nicely centred on the page -->
+    <div class="container">
+        <!-- good practice to use 'semantic' tags like nav, article and section instead of 'div' -->
+        <nav>
+            <a href='/'>Home</a> |
+            <a href='/live'>Live</a> |
+            <a href='/samples'>Samples</a> |
+            <a href='/alert?start_dt=0&end_dt=1&area_under=0'>Alert</a>
+        </nav>
+        <section>
+            <h3>Choose a Sample Dataset to View</h3>
+            <!-- the overnight data takes too long to return from db -->
+            <button disabled id='btnOvernight'>Overnight on five sensors</button>
+            <button id='btnEleven'>Eleven seizure emulations</button>
+            <button id='btnPilot'>17th March data</button>
+        </section>
+        <hr />
+        <!-- we need somewhere for the chart to go -->
+        <section id='sample-chart'></section>
+    </div>
+</body>
+
+<script src="/static/samples.js"></script>
+<script>
+
+
+</script>
+
+</html>

@@ -1,7 +1,7 @@
 import sqlite3
 import json # we might need to use json data format
 
-# a function to retrieve valies from the DB given a start and end date-time
+# a function to retrieve values from the DB given a start and end date-time
 def retrieve_dt(start_dt='2021-03-04 17:00:00', end_dt='2021-03-04 17:00:30'):
     # we need a connection
     db_conn = sqlite3.connect('movement_db')
@@ -35,7 +35,7 @@ def retrieve_dt(start_dt='2021-03-04 17:00:00', end_dt='2021-03-04 17:00:30'):
     and reading_dt <= '{}'
     '''.format(start_dt, end_dt)
 
-    results_list=[] #create list 
+    results_list=[] #create an empty list 
 
     # execute the statements (using the cursor)
     db_curr.execute(statement0)
@@ -48,11 +48,12 @@ def retrieve_dt(start_dt='2021-03-04 17:00:00', end_dt='2021-03-04 17:00:30'):
     results_list.append(json.dumps(db_curr.fetchall()))
     db_curr.execute(statement4)
     results_list.append(json.dumps(db_curr.fetchall()))
-    # print(results_list)
+    # print('results_list from retrieve_dt: {}\n'.format(results_list))
     # results_j = json.dumps(db_curr.fetchall()) 
     # close the connection
     db_conn.close()
     # We want to return the data for use elsewhere
+    # print(results_list)
     return results_list
 
 if __name__ == "__main__":

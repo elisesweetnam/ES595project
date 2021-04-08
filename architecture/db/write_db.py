@@ -37,4 +37,4 @@ def handleWriting(next_pin_values):
 
 
 if __name__ == "__main__":
-    handleWriting()
+    handleWriting([1000, 2000, 3000, 4000, 5000]) # exercise the code with saple dumy values
