@@ -22,12 +22,16 @@ def handleData():
         time.sleep(0.1 - ((time.time() - starttime) % 0.1)) # locks to system clock, sleeps every 0.1 seconds
         url = 'http://192.168.0.40/movement' # '192.168.0.20/movement' reading data from arduino board 
         resp = requests.get(url) 
-        prev_pin_list = pin_list # keep the previous set of pin readings
         pin_list=resp.text.split('-') # splits the string of readings into a list of individual numbers 
+        pin_list.pop()
+        print(pin_list)
+        pin_list_int = [int(float(x)) for x in pin_list]
+        pin_list.append('0')
+        prev_pin_list = pin_list_int # keep the previous set of pin readings
         # don't use this next line when using real sensors
         # pin_list = [1000,2000,3000,4000,0,0] # we always get an extraneous value in addition to pins - probably new line character
         # calculate the root-square of each reading difference
-        diff_list = [ math.sqrt( ( pin_list[i] - prev_pin_list[i] )**2 ) for i in range(0,5) ]
+        diff_list = [ math.sqrt( ( pin_list_int[i] - prev_pin_list[i] )**2 ) for i in range(0,5) ]
         print(diff_list)
     # not sure what to do with these root-square values
         # mov_tests_df['Movementsq - rolling avg'] = mov_tests_df['Tom sit up 1s sampling'].rolling(3000).mean()
