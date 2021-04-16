@@ -1,8 +1,5 @@
-// JavaScript code goes here
-
 // use the Luxon library to handle dates and times nicely (loaded as a script into index.html)
 const DateTime = luxon.DateTime
-
 // we need models so we can persist data here (on the web browser client)
 let historic_values = [] // an empty array
 let start_dt

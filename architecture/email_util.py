@@ -61,6 +61,5 @@ def handleEmail(msg, start_dt=0, end_dt=1, area_under=0): # sensible defaults
             sender_email, receiver_email, message.as_string()
         )
     
-
 if __name__ == "__main__":
     handleEmail('dummy message just to exercise the code')

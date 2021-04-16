@@ -1,7 +1,5 @@
 import requests # see intro python book p222
 import time
-import serial
-from datetime import datetime,timedelta
 import email_util
 import db.write_db
 import using_trapz
@@ -20,30 +18,36 @@ def handleData():
     # make requests every 0.1 second, forever
     while True:
         time.sleep(0.1 - ((time.time() - starttime) % 0.1)) # locks to system clock, sleeps every 0.1 seconds
-        url = 'http://192.168.0.40/movement' # '192.168.0.20/movement' reading data from arduino board 
-        resp = requests.get(url) 
-        pin_list=resp.text.split('-') # splits the string of readings into a list of individual numbers 
-        pin_list.pop()
-        print(pin_list)
-        pin_list_int = [int(float(x)) for x in pin_list]
-        pin_list.append('0')
-        prev_pin_list = pin_list_int # keep the previous set of pin readings
-        # don't use this next line when using real sensors
-        # pin_list = [1000,2000,3000,4000,0,0] # we always get an extraneous value in addition to pins - probably new line character
-        # calculate the root-square of each reading difference
-        diff_list = [ math.sqrt( ( pin_list_int[i] - prev_pin_list[i] )**2 ) for i in range(0,5) ]
-        print(diff_list)
-    # not sure what to do with these root-square values
-        # mov_tests_df['Movementsq - rolling avg'] = mov_tests_df['Tom sit up 1s sampling'].rolling(3000).mean()
-        db.write_db.handleWriting(pin_list) #sends pin_list to write_db
-        # iterate over the five sensors, checking
-        if alert_sent and count<300: # 300 represents 30 seconds as tenths of a second 
-            # we have recently sent an alert so we wait...
-            count += 1
-        else:
-            count = 0
-            # start checking for alerts again
-            alert_sent = using_trapz.handleTrapz() # the function call will return True if an alert was raised and Fasle if no alert was raised
-           
+        # we may not get any response from the sensor board, so catch any exceptions
+        try:
+            url = 'http://192.168.0.40/movement' # '192.168.0.20/movement' reading data from arduino board 
+            resp = requests.get(url) 
+            pin_list=resp.text.split('-') # splits the string of readings into a list of individual numbers 
+            pin_list.pop() # we don't need the very last value, it is meaningless
+            print(pin_list)
+            pin_list_int = [int(float(x)) for x in pin_list]
+            pin_list.append('0') # everything else expects that trailing 'meaningless' value
+            prev_pin_list = pin_list_int # keep the previous set of pin readings
+            diff_list = [ abs( pin_list_int[i] - prev_pin_list[i] ) for i in range(0,5) ] # take the absolute (ie positive) number
+
+            print(diff_list)
+            db.write_db.handleWriting(pin_list) #sends pin_list to write_db
+            # iterate over the five sensors, checking
+            if alert_sent and count<300: # 300 represents 30 seconds as tenths of a second 
+                # we have recently sent an alert so we wait...
+                count += 1
+            else:
+                count = 0
+                # start checking for alerts again
+                alert_sent = using_trapz.handleTrapz() # the function call will return True if an alert was raised and Fasle if no alert was raised
+        # here we handle exceptions that may happen within the 'try' block  
+        except ConnectionRefusedError: 
+            print('Connection Refused Error - trying again in 10ms') # just ignore failed connections
+        except ConnectionError:
+            print('Connection Error - trying again in 10ms') 
+        except Exception as e: # catch all other exceptions
+            print('Exception happened {}'.format(e))
+        finally:
+            pass
 if __name__ == "__main__":
     handleData()

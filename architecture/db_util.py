@@ -5,11 +5,8 @@ def handleDatabase():
     '''
     This module handles the database reading and writing
     '''
-    print("handling database")
     init.handleInitiliseDB()
     wrt.handleWriting()
     
-
-
 if __name__ == "__main__":
     handleDatabase()

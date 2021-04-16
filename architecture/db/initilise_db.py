@@ -4,10 +4,8 @@ def handleInitiliseDB():
     '''
     this module creates the database if required 
     '''
-    
     db_conn = sqlite3.connect('movement_db')
     db_curr = db_conn.cursor()
-
     statement0 = ''' 
     CREATE TABLE movement_table0 (
     reading int,
@@ -44,12 +42,8 @@ def handleInitiliseDB():
     db_curr.execute(statement2)
     db_curr.execute(statement3)
     db_curr.execute(statement4)
-
-    # commit the changes
-    db_conn.commit()
-
-    # close the connection
-    db_conn.close()
+    db_conn.commit()# commit the changes  
+    db_conn.close()# close the connection
 
 if __name__ == "__main__":
     handleInitiliseDB()

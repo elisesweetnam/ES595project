@@ -31,7 +31,6 @@ def handleWriting(next_pin_values):
     db_curr.execute(statement2)
     db_curr.execute(statement3)
     db_curr.execute(statement4)
-
     db_conn.commit()
     db_conn.close()
 

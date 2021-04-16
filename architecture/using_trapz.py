@@ -6,20 +6,8 @@ import pandas as pd
 import time
 from datetime import datetime,timedelta
 import requests # we need this so we can make http requests to the server (e.g. to send email)
-
-
 from db.retrieve_db import retrieve_dt
 from email_util import handleEmail
-
-# plt.rc('figure', figsize=(10,6))
-
-# df1 = pd.read_excel("seizuretesting.xlsx", sheet_name = 'Seizure examples')
-# df2 = pd.read_excel("seizuretesting.xlsx", sheet_name = 'Data - movement tests')
-# # plt.plot(df1)
-# # df1[['Seizure 1', 'Seizure 2']]
-
-# retrieved = retrieve_dt(start_dt = "2021-03-17 14:42:45",end_dt = "2021-03-17 14:42:55")#calls string from retrieve_dt
-# sample = json.loads(retrieved[0])#calling on the 0th memebr of the string
 
 def handleTrapz():
     '''
@@ -58,18 +46,14 @@ def handleTrapz():
         return False # we found no reason to raise an alert
     else:
         handleEmail(alert_string, start, end, currentAreaAlert) # send the alert string to the email utility
-
         # try to use the server to send an email (the server knows the latest email address to use)
         url = 'http://127.0.0.1:5000/send_email?message={}&start_dt={}&end_dt={}&area_under={}'.format(alert_string, start, end, currentAreaAlert)
         print(url)
         d = requests.get(url)
-
         alert_string = ''# set the alert string ready for the next set of alerts to be generated
         return True # yes, we DID raise an alert
-        
         # NB this alert_string could be altered so it included clickable links for each graph
         # probably best to send the alert data and let the email utility work out what to do with it
-
 
 # we call our alert checker every 0.1 seconds
 def main():
